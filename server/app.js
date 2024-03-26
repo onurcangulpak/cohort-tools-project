@@ -5,11 +5,15 @@ const PORT = 5005;
 const cohorts = require("./cohorts.json");
 const students = require("./students.json");
 const cors = require("cors");
+const mongoose = require("mongoose");
 //
 
 // STATIC DATA
 // Devs Team - Import the provided files with JSON data of students and cohorts here:
-// ...
+mongoose
+  .connect("mongodb://localhost:27017/cohort-tools-api")
+  .then((x) => console.log(`Connected to Database: "${x.connections[0].name}"`))
+  .catch((err) => console.error("Error connecting to MongoDB", err));
 
 // INITIALIZE EXPRESS APP - https://expressjs.com/en/4x/api.html#express
 const app = express();
@@ -38,6 +42,8 @@ app.get("/api/cohorts", (req, res) => {
 app.get("/api/students", (req, res) => {
   res.json(students);
 });
+
+
 
 // START SERVER
 app.listen(PORT, () => {
