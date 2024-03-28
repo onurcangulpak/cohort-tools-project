@@ -5,8 +5,8 @@ const cookieParser = require("cookie-parser");
 const PORT = 5005;
 const cohorts = require("./cohorts.json");
 const students = require("./students.json");
-const StudentsModel = require("../models/Students.model")
-const CohortsModel = require("../models/Cohorts.model")
+const StudentsModel = require("./models/Students.model")
+const CohortsModel = require("./models/Cohorts.model")
 const cors = require("cors");
 
 //
@@ -147,6 +147,7 @@ app.post("/api/students" , (req, res) => {
   })
   .catch((err) => {
     res.status(500).json({message:"Error creating new Student"})
+    console.log(err)
   })
 })
 
@@ -157,6 +158,7 @@ app.get("/api/students", (req,res) =>
     })
     .catch((err) => {
       res.status(500).json({message: "error finding all students"})
+      console.log(err)
     })
 )
 
@@ -182,12 +184,12 @@ app.get("/api/students/:studentId", (req, res) => {
 })
 
 app.put("/api/student/:studentId", (req, res) => {
-  StudentsModel.findByIdAndUpdate(req.params, req.body, {new:true})
+  StudentsModel.find(req.params, req.body, {new:true})
   .then((student) => {
     res.status(200).json(student)
   })
   .catch((err) => {
-    res.status(500).json({message: "Error updating student"})
+    res.status(500).json({message: "Error updating student", error: err.message })
   })
 })
 
