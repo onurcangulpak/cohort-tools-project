@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -8,6 +9,10 @@ const students = require("./students.json");
 const StudentsModel = require("./models/Students.model");
 const CohortsModel = require("./models/Cohorts.model");
 const cors = require("cors");
+const {
+  errorHandler,
+  notFoundHandler,
+} = require("./middleware/error-handling");
 
 //
 
@@ -30,6 +35,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
 // ROUTES - https://expressjs.com/en/starter/basic-routing.html
 // Devs Team - Start working on the routes here:
 // ...
@@ -39,9 +45,12 @@ app.get("/docs", (req, res) => {
 });
 
 // getting all the cohorts
+<<<<<<< HEAD
 app.get("/api/cohorts", (req, res) => {
   res.json(cohorts);
 });
+=======
+>>>>>>> ee4ed805658e728898429b702ddfb0ed5767fa94
 
 // Creatingg new cohorts
 app.post("/api/cohorts", (req, res) => {
@@ -54,7 +63,11 @@ app.post("/api/cohorts", (req, res) => {
     startDate: req.body.startDate,
     endDate: req.body.endDate,
     programManager: req.body.programManager,
+<<<<<<< HEAD
     leadTeach: req.body.leadTeach,
+=======
+    leadTeacher: req.body.leadTeacher,
+>>>>>>> ee4ed805658e728898429b702ddfb0ed5767fa94
     totalHours: req.body.totalHours,
   })
     .then((createdCohort) => {
@@ -88,7 +101,11 @@ app.get("/api/cohorts/:cohortId", (req, res) => {
 });
 
 // FINDING COHORTS WITH ID AND UPDATE
+<<<<<<< HEAD
 app.get("/api/cohorts/:cohortId", () => {
+=======
+app.put("/api/cohorts/:cohortId", () => {
+>>>>>>> ee4ed805658e728898429b702ddfb0ed5767fa94
   CohortsModel.findByIdAndUpdate(req.params.cohortId)
     .then((updatedCohortsModel) => {
       res.status(200).json(updatedCohortsModel);
@@ -134,6 +151,10 @@ app.post("/api/students", (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({ message: "Error creating new Student" });
+<<<<<<< HEAD
+=======
+      console.log(err);
+>>>>>>> ee4ed805658e728898429b702ddfb0ed5767fa94
     });
 });
 
@@ -144,6 +165,10 @@ app.get("/api/students", (req, res) =>
     })
     .catch((err) => {
       res.status(500).json({ message: "error finding all students" });
+<<<<<<< HEAD
+=======
+      console.log(err);
+>>>>>>> ee4ed805658e728898429b702ddfb0ed5767fa94
     })
 );
 
@@ -169,12 +194,22 @@ app.get("/api/students/:studentId", (req, res) => {
 });
 
 app.put("/api/student/:studentId", (req, res) => {
+<<<<<<< HEAD
   StudentsModel.findByIdAndUpdate(req.params, req.body, { new: true })
+=======
+  StudentsModel.find(req.params, req.body, { new: true })
+>>>>>>> ee4ed805658e728898429b702ddfb0ed5767fa94
     .then((student) => {
       res.status(200).json(student);
     })
     .catch((err) => {
+<<<<<<< HEAD
       res.status(500).json({ message: "Error updating student" });
+=======
+      res
+        .status(500)
+        .json({ message: "Error updating student", error: err.message });
+>>>>>>> ee4ed805658e728898429b702ddfb0ed5767fa94
     });
 });
 
@@ -187,6 +222,16 @@ app.delete("/api/student/:studentId", (req, res) => {
       res.status(500).json({ message: "Error deleting a student" });
     });
 });
+<<<<<<< HEAD
+=======
+
+// MARIANA ADDED
+
+const authRouter = require("./routes/auth.routes"); //  <== IMPORT
+app.use("/auth", authRouter);  
+app.use(notFoundHandler);
+app.use(errorHandler); 
+>>>>>>> ee4ed805658e728898429b702ddfb0ed5767fa94
 
 // START SERVER
 app.listen(PORT, () => {

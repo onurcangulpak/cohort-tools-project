@@ -11,12 +11,13 @@ function StudentListPage() {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/api/students?$`)
+      .get(`${API_URL}/api/students`)
       .then((response) => {
-        setStudents(response.data)})
+        setStudents(response.data)
+        console.log(response.data)
+      })
       .catch((error) => console.log(error));
   }, []);
-
   return (
     <div className="StudentListPage">
       <div className="flex justify-between items-center p-2 font-bold border-b">

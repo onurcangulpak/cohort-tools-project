@@ -11,6 +11,8 @@ function StudentCard({
   image,
   className,
 }) {
+
+ 
   return (
     <Link to={`/students/details/${studentId}`}>
       <div
